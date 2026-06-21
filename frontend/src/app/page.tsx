@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BarChart2, Calendar, Users, ShieldCheck } from "lucide-react";
+import { ArrowRight, BarChart2, Calendar, Users } from "lucide-react";
+import { motion } from "framer-motion";
+import ThreeGlobe from "../components/dashboard/ThreeGlobe";
 
 export default function Home() {
   return (
     <div className="min-h-screen animated-bg flex flex-col items-center justify-center relative overflow-hidden text-slate-800 dark:text-slate-100">
+      
+      {/* 3D Background */}
+      <ThreeGlobe />
       
       {/* Decorative background elements */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-[120px]" />
@@ -32,10 +37,20 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <div className="z-10 text-center px-4 max-w-4xl mt-20">
-        <div className="inline-block px-4 py-1.5 mb-6 rounded-full glass border-white/40 text-sm font-semibold text-blue-800 dark:text-blue-300 shadow-sm animate-fade-in-up">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="z-10 text-center px-4 max-w-4xl mt-20"
+      >
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="inline-block px-4 py-1.5 mb-6 rounded-full glass border-white/40 text-sm font-semibold text-blue-800 dark:text-blue-300 shadow-sm"
+        >
           ✨ The Future of HR Management
-        </div>
+        </motion.div>
         <h1 className="text-6xl md:text-7xl font-black mb-6 leading-tight tracking-tighter">
           Manage your team with <br/> 
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Intelligent Automation</span>
@@ -53,33 +68,48 @@ export default function Home() {
             See Dashboard
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Feature Cards Grid */}
       <div className="z-10 grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 max-w-6xl px-6 w-full">
-        <div className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left"
+        >
           <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
             <Users size={28} />
           </div>
           <h3 className="text-xl font-bold mb-3">Employee Directory</h3>
           <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Centralize your team data with rich profiles, document management, and seamless onboarding flows.</p>
-        </div>
+        </motion.div>
         
-        <div className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left relative overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left relative overflow-hidden"
+        >
           <div className="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center mb-6 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
             <BarChart2 size={28} />
           </div>
           <h3 className="text-xl font-bold mb-3">AI Analytics</h3>
           <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Predictive attrition models and comprehensive performance dashboards powered by machine learning.</p>
-        </div>
+        </motion.div>
         
-        <div className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left">
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="glass-panel p-8 rounded-3xl hover-3d group cursor-pointer text-left"
+        >
           <div className="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mb-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">
             <Calendar size={28} />
           </div>
           <h3 className="text-xl font-bold mb-3">Time & Attendance</h3>
           <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Automated check-ins, intelligent leave routing, and real-time payroll synchronization.</p>
-        </div>
+        </motion.div>
       </div>
       
     </div>

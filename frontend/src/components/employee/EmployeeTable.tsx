@@ -78,8 +78,7 @@ export default function EmployeeTable() {
           <TableHeader>
             <TableRow>
               <TableHead>Employee Code</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
+              <TableHead>Employee</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Designation</TableHead>
               <TableHead>Salary</TableHead>
@@ -99,8 +98,21 @@ export default function EmployeeTable() {
               employees.map((emp: any) => (
                 <TableRow key={emp.id}>
                   <TableCell className="font-medium">{emp.employee_code}</TableCell>
-                  <TableCell>{emp.name || "N/A"}</TableCell>
-                  <TableCell>{emp.email || "N/A"}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center space-x-3">
+                      <div className="h-10 w-10 rounded-full bg-slate-100 overflow-hidden shrink-0 ring-2 ring-slate-100 dark:ring-slate-800">
+                        <img 
+                          src={`https://api.dicebear.com/7.x/notionists/svg?seed=${emp.name || emp.employee_code}&backgroundColor=b6e3f4,c0aede,d1d4f9`} 
+                          alt={emp.name || "Employee"} 
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-slate-800 dark:text-slate-200">{emp.name || "N/A"}</div>
+                        <div className="text-xs text-slate-500">{emp.email || "N/A"}</div>
+                      </div>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{emp.department_name || "N/A"}</Badge>
                   </TableCell>
