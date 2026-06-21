@@ -27,3 +27,7 @@ jobs:
 
       - name: Build Check
         run: echo "Build Successful"
+
+      - name: Run Lint
+        run: npm run lint
+        working-directory: backend
