@@ -210,10 +210,16 @@ async (req,res)=>{
    `
   );
 
+  const payroll =
+  await pool.query(
+   `SELECT SUM(net_salary) AS total_salary_paid FROM payroll`
+  );
+
   const data = {
    employees: Number(employees.rows[0].count),
    candidates: Number(candidates.rows[0].count),
-   openJobs: Number(jobs.rows[0].count)
+   openJobs: Number(jobs.rows[0].count),
+   payrollCost: Number(payroll.rows[0].total_salary_paid || 0)
   };
 
   await setCache(

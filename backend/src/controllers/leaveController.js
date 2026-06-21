@@ -251,10 +251,11 @@ async (req,res)=>{
   `
   SELECT
   lr.*,
-  e.employee_code
+  e.employee_code,
+  lt.leave_name as leave_type_name
   FROM leave_requests lr
-  JOIN employees e
-  ON lr.employee_id=e.id
+  JOIN employees e ON lr.employee_id = e.id
+  LEFT JOIN leave_types lt ON lr.leave_type_id = lt.id
   `
   );
 
@@ -265,5 +266,13 @@ async (req,res)=>{
   return error(res, err.message, 500);
 
  }
+};
 
+exports.getLeaveTypes = async (req, res) => {
+  try {
+    const result = await pool.query(`SELECT id, leave_name as name FROM leave_types ORDER BY id`);
+    return success(res, result.rows);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
 };

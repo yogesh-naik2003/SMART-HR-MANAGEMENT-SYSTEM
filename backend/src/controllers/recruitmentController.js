@@ -318,3 +318,58 @@ exports.deleteCandidate = async (req, res) => {
     return error(res, err.message, 500);
   }
 };
+
+exports.getJobs = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT j.*, d.department_name
+      FROM job_posts j
+      LEFT JOIN departments d ON j.department_id = d.id
+      ORDER BY j.created_at DESC
+    `);
+    return success(res, result.rows);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+exports.getCandidates = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT c.*, a.application_status as status, j.title as applied_job
+      FROM candidates c
+      LEFT JOIN applications a ON c.id = a.candidate_id
+      LEFT JOIN job_posts j ON a.job_post_id = j.id
+      ORDER BY c.created_at DESC
+    `);
+    return success(res, result.rows);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+exports.getFunnel = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT application_status as name, COUNT(id) as value
+      FROM applications
+      GROUP BY application_status
+    `);
+    
+    // Add default zero values for any missing stages to ensure the chart renders properly
+    const stages = ["APPLIED", "SHORTLISTED", "INTERVIEWED", "SELECTED", "REJECTED"];
+    const funnelMap = result.rows.reduce((acc, row) => {
+      acc[row.name] = parseInt(row.value, 10);
+      return acc;
+    }, {});
+    
+    const formattedFunnel = stages.map(stage => ({
+      name: stage,
+      value: funnelMap[stage] || 0
+    }));
+
+    return success(res, formattedFunnel);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};

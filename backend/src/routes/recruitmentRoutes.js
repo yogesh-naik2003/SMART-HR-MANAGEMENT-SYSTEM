@@ -24,10 +24,16 @@ require("../middleware/roleMiddleware");
  *       201:
  *         description: Job created
  */
+router.get(
+ "/jobs",
+ authMiddleware,
+ recruitmentController.getJobs
+);
+
 router.post(
  "/jobs",
  authMiddleware,
- roleMiddleware(1),
+ roleMiddleware("ADMIN", "HR_RECRUITER"),
  recruitmentController.createJob
 );
 
@@ -58,9 +64,22 @@ router.delete(
  *       201:
  *         description: Candidate created
  */
+router.get(
+ "/candidates",
+ authMiddleware,
+ recruitmentController.getCandidates
+);
+
+router.get(
+ "/funnel",
+ authMiddleware,
+ recruitmentController.getFunnel
+);
+
 router.post(
  "/candidates",
  authMiddleware,
+ roleMiddleware("ADMIN", "HR_RECRUITER"),
  recruitmentController.createCandidate
 );
 

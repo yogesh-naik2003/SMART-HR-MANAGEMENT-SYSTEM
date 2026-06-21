@@ -50,4 +50,10 @@ router.get(
  payrollController.getPayrolls
 );
 
+router.get(
+ "/download/:id",
+ authMiddleware,
+ payrollController.downloadPayslip
+);
+
 module.exports = router;

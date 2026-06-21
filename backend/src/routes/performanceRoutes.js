@@ -22,6 +22,12 @@ require("../middleware/roleMiddleware");
  *       201:
  *         description: Goal created
  */
+router.get(
+ "/goals",
+ authMiddleware,
+ performanceController.getGoals
+);
+
 router.post(
  "/goals",
  authMiddleware,
@@ -87,6 +93,12 @@ router.put(
  *       201:
  *         description: Review added
  */
+router.get(
+ "/reviews",
+ authMiddleware,
+ performanceController.getReviews
+);
+
 router.post(
  "/review",
  authMiddleware,

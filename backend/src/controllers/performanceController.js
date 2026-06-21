@@ -191,3 +191,35 @@ exports.addReview = async (req, res) => {
     return error(res, err.message, 500);
   }
 };
+
+exports.getGoals = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT eg.*, g.title, g.description, e.employee_code, u.name as employee_name
+      FROM employee_goals eg
+      JOIN goals g ON eg.goal_id = g.id
+      JOIN employees e ON eg.employee_id = e.id
+      JOIN users u ON e.user_id = u.id
+      ORDER BY eg.id DESC
+    `);
+    return success(res, result.rows);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+exports.getReviews = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT pr.*, e.employee_code, u.name as employee_name, rev.name as reviewer_name
+      FROM performance_reviews pr
+      JOIN employees e ON pr.employee_id = e.id
+      JOIN users u ON e.user_id = u.id
+      LEFT JOIN users rev ON pr.reviewer_id = rev.id
+      ORDER BY pr.created_at DESC
+    `);
+    return success(res, result.rows);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};

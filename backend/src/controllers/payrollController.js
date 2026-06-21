@@ -285,3 +285,24 @@ function buildSimplePdf(payslip) {
 function escapePdfText(text) {
   return String(text).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
 }
+
+exports.downloadPayslip = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(`SELECT * FROM payroll WHERE id = $1`, [id]);
+    if (result.rows.length === 0) {
+      return res.status(404).send("Payroll not found");
+    }
+    const payroll = result.rows[0];
+    const pdfFileName = `payslip_${payroll.employee_id}_${payroll.year}_${String(payroll.month).padStart(2, "0")}.pdf`;
+    const pdfPath = path.join(__dirname, "..", "..", "payslips", pdfFileName);
+    
+    if (!fs.existsSync(pdfPath)) {
+      return res.status(404).send("Payslip PDF not found");
+    }
+    
+    res.download(pdfPath);
+  } catch (err) {
+    next(err);
+  }
+};

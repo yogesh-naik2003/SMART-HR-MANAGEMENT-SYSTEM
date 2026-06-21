@@ -101,4 +101,10 @@ router.get(
  leaveController.getLeaves
 );
 
+router.get(
+ "/types",
+ authMiddleware,
+ leaveController.getLeaveTypes
+);
+
 module.exports = router;

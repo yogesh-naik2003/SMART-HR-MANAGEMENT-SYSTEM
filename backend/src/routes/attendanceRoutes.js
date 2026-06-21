@@ -59,6 +59,12 @@ router.post(
  *         description: Attendance records
  */
 router.get(
+  "/summary",
+  authMiddleware,
+  attendanceController.getSummary
+);
+
+router.get(
   "/",
   authMiddleware,
   attendanceController.getAttendance

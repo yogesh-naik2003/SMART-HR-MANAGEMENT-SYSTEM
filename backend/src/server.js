@@ -23,6 +23,7 @@ const mountApiVersions = (basePath, routes) => {
   app.use(`${basePath}/audit`, routes.auditRoutes);
   app.use(`${basePath}/files`, routes.fileRoutes);
   app.use(`${basePath}/email`, routes.emailRoutes);
+  app.use(`${basePath}/uploads`, routes.uploadRoutes);
 };
 
 app.get("/", (req, res) => {
@@ -77,8 +78,8 @@ require("./routes/analyticsRoutes");
 const auditRoutes =
 require("./routes/auditRoutes");
 const fileRoutes = require("./routes/fileRoutes");
-const emailRoutes =
-require("./routes/emailRoutes");
+const emailRoutes = require("./routes/emailRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 const legacyRoutes = {
   authRoutes,
@@ -93,7 +94,8 @@ const legacyRoutes = {
   analyticsRoutes,
   auditRoutes,
   fileRoutes,
-  emailRoutes
+  emailRoutes,
+  uploadRoutes
 };
 
 mountApiVersions("/api", legacyRoutes);
@@ -117,6 +119,9 @@ app.use(
  )
 
 );
+
+const errorHandler = require("./middleware/errorHandler");
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

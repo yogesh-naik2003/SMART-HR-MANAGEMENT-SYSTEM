@@ -1,13 +1,32 @@
-const roleMiddleware = (...roles) => {
+const { error } = require("../utils/apiResponse");
+
+const authorizeRole = (...allowedRoles) => {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.roleId)) {
-      return res.status(403).json({
-        message: "Access Denied"
-      });
+    const roleId = req.user.roleId || req.user.role_id;
+    if (!req.user || !roleId) {
+      return error(res, "Access denied. Role information missing.", 403);
+    }
+
+    const roleMapping = {
+      1: "ADMIN",
+      2: "SENIOR_MANAGER",
+      3: "HR_RECRUITER",
+      4: "EMPLOYEE"
+    };
+
+    const userRole = roleMapping[roleId];
+
+    // allowedRoles can be an array of IDs or Strings. Flatten them for easy checking.
+    const isAllowed = allowedRoles.flat().some(role => 
+      String(role) === String(roleId) || role === userRole
+    );
+
+    if (!isAllowed) {
+      return error(res, `Access denied. Required roles: ${allowedRoles.flat().join(", ")}`, 403);
     }
 
     next();
   };
 };
 
-module.exports = roleMiddleware;
+module.exports = authorizeRole;

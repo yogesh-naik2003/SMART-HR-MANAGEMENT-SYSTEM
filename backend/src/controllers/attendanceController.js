@@ -27,6 +27,11 @@ exports.checkIn = async (req, res) => {
       return error(res, "employee_id is required", 400);
     }
 
+    const employeeCheck = await pool.query("SELECT id FROM employees WHERE id = $1", [employee_id]);
+    if (employeeCheck.rows.length === 0) {
+      return error(res, "Employee record not found for this account", 404);
+    }
+
     const existingAttendance = await pool.query(
       `
       SELECT id, check_in, check_out
@@ -138,6 +143,7 @@ async (req,res)=>{
       FROM attendance a
       JOIN employees e
       ON a.employee_id=e.id
+      ORDER BY a.attendance_date DESC, a.check_in DESC
       `
     );
 
@@ -145,6 +151,43 @@ async (req,res)=>{
     return success(res, result.rows);
 
   }catch(err){
+    return error(res, err.message, 500);
+  }
+};
+
+exports.getSummary = async (req, res) => {
+  try {
+    const summary = await pool.query(`
+      SELECT 
+        COUNT(id) as present_days,
+        COUNT(CASE WHEN check_in::time > '09:15:00' THEN 1 END) as late_days,
+        SUM(working_hours) as total_hours
+      FROM attendance
+      WHERE attendance_date >= CURRENT_DATE - INTERVAL '30 days'
+    `);
+    
+    const present_days = parseInt(summary.rows[0].present_days) || 0;
+    const absent_days = Math.max(30 - present_days, 0);
+
+    const trend = await pool.query(`
+      SELECT 
+        TO_CHAR(attendance_date, 'Mon DD') as name,
+        COUNT(id) as present,
+        (SELECT COUNT(id) FROM employees) - COUNT(id) as absent
+      FROM attendance
+      WHERE attendance_date >= CURRENT_DATE - INTERVAL '30 days'
+      GROUP BY attendance_date
+      ORDER BY attendance_date ASC
+    `);
+
+    return success(res, {
+      present_days,
+      absent_days,
+      late_days: parseInt(summary.rows[0].late_days) || 0,
+      total_hours: Math.round(parseFloat(summary.rows[0].total_hours) || 0),
+      trend: trend.rows
+    });
+  } catch (err) {
     return error(res, err.message, 500);
   }
 };

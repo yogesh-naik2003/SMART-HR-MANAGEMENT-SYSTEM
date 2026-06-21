@@ -47,6 +47,12 @@ router.get(
   employeeController.getEmployees
 );
 
+router.get(
+  "/:id",
+  authMiddleware,
+  employeeController.getEmployeeProfile
+);
+
 router.put(
   "/:id",
   authMiddleware,
