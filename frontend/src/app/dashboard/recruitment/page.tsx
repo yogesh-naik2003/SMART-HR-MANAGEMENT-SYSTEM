@@ -17,6 +17,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
+import { motion } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+};
 
 const jobSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -90,15 +96,17 @@ export default function RecruitmentPage() {
       <DashboardLayout>
         <h1 className="text-2xl font-bold mb-6">Recruitment & ATS</h1>
 
+        <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
         <Tabs defaultValue="funnel" className="space-y-6">
-          <TabsList className="bg-white border rounded-md shadow-sm h-12 w-full justify-start overflow-x-auto">
-            <TabsTrigger value="funnel">Recruitment Funnel</TabsTrigger>
-            <TabsTrigger value="jobs">Job Management</TabsTrigger>
-            <TabsTrigger value="candidates">Candidate Tracking</TabsTrigger>
+          <TabsList className="glass-panel border-white/40 dark:border-white/10 shadow-sm h-14 w-full justify-start overflow-x-auto p-1 rounded-xl">
+            <TabsTrigger value="funnel" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Recruitment Funnel</TabsTrigger>
+            <TabsTrigger value="jobs" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Job Management</TabsTrigger>
+            <TabsTrigger value="candidates" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Candidate Tracking</TabsTrigger>
           </TabsList>
 
           <TabsContent value="funnel">
-            <Card>
+            <motion.div variants={itemVariants}>
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden">
               <CardHeader><CardTitle>Pipeline Overview</CardTitle></CardHeader>
               <CardContent>
                 <div className="w-full">
@@ -114,10 +122,12 @@ export default function RecruitmentPage() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="jobs" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-1">
+            <motion.div variants={itemVariants} className="lg:col-span-1">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl h-full">
               <CardHeader><CardTitle>Post a Job</CardTitle></CardHeader>
               <CardContent>
                 <form onSubmit={jobForm.handleSubmit(onJobSubmit)} className="space-y-4">
@@ -142,12 +152,14 @@ export default function RecruitmentPage() {
                       <p className="text-sm text-red-500 mt-1">{jobForm.formState.errors.description.message}</p>
                     )}
                   </div>
-                  <Button type="submit" className="w-full">Publish Job</Button>
+                  <Button type="submit" className="w-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">Publish Job</Button>
                 </form>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="lg:col-span-2">
+            <motion.div variants={itemVariants} className="lg:col-span-2">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden h-full">
               <CardHeader><CardTitle>Active Openings</CardTitle></CardHeader>
               <CardContent>
                 <Table>
@@ -161,8 +173,8 @@ export default function RecruitmentPage() {
                   </TableHeader>
                   <TableBody>
                     {jobs.map((j: any) => (
-                      <TableRow key={j.id}>
-                        <TableCell className="font-medium">{j.title}</TableCell>
+                      <TableRow key={j.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                        <TableCell className="font-medium text-slate-700 dark:text-slate-300">{j.title}</TableCell>
                         <TableCell>{j.department_name}</TableCell>
                         <TableCell>{new Date(j.created_at).toLocaleDateString()}</TableCell>
                         <TableCell><Badge variant="default">Open</Badge></TableCell>
@@ -172,10 +184,12 @@ export default function RecruitmentPage() {
                 </Table>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="candidates" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-1">
+            <motion.div variants={itemVariants} className="lg:col-span-1">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl h-full">
               <CardHeader><CardTitle>Add Candidate</CardTitle></CardHeader>
               <CardContent>
                 <form onSubmit={candidateForm.handleSubmit(onCandidateSubmit)} className="space-y-4">
@@ -201,12 +215,14 @@ export default function RecruitmentPage() {
                     <Label>Experience (Years)</Label>
                     <Input type="number" {...candidateForm.register("experience")} />
                   </div>
-                  <Button type="submit" className="w-full">Save Candidate</Button>
+                  <Button type="submit" className="w-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">Save Candidate</Button>
                 </form>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="lg:col-span-2">
+            <motion.div variants={itemVariants} className="lg:col-span-2">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden h-full">
               <CardHeader><CardTitle>Candidate Pool</CardTitle></CardHeader>
               <CardContent>
                 <Table>
@@ -220,7 +236,7 @@ export default function RecruitmentPage() {
                   </TableHeader>
                   <TableBody>
                     {candidates.map((c: any) => (
-                      <TableRow key={c.id}>
+                      <TableRow key={c.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                         <TableCell className="font-medium">
                           <div>{c.full_name}</div>
                           <div className="text-xs text-gray-500">{c.email}</div>
@@ -236,8 +252,10 @@ export default function RecruitmentPage() {
                 </Table>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
         </Tabs>
+        </motion.div>
       </DashboardLayout>
     </AuthGuard>
   );

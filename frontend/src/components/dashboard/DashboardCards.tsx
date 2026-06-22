@@ -3,6 +3,17 @@
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { Users, FileText, Briefcase, DollarSign } from "lucide-react";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+};
 
 interface DashboardData {
  employees: number;
@@ -26,9 +37,11 @@ export default function DashboardCards() {
   fetchSummary();
  }, []);
 
- if (!data) return <div className="grid grid-cols-4 gap-4 animate-pulse">
-  {[1,2,3,4].map(i => <div key={i} className="h-32 bg-gray-200 rounded-lg"></div>)}
- </div>;
+ if (!data) return (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-pulse">
+   {[1,2,3,4].map(i => <div key={i} className="h-32 glass-panel border-white/40 dark:border-white/10 rounded-2xl"></div>)}
+  </div>
+ );
 
  const cards = [
   { title: "Total Employees", value: data.employees, icon: Users, color: "text-blue-600", bg: "bg-blue-100" },
@@ -38,21 +51,23 @@ export default function DashboardCards() {
  ];
 
  return (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+  <motion.div variants={containerVariants} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
    {cards.map((card, idx) => {
     const Icon = card.icon;
     return (
-     <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
-      <div className={`p-4 rounded-full ${card.bg}`}>
-       <Icon className={`w-8 h-8 ${card.color}`} />
+     <motion.div variants={itemVariants} key={idx}>
+      <div className="glass-panel border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-xl flex items-center space-x-4 hover-3d transition-all cursor-pointer">
+       <div className={`p-4 rounded-xl ${card.bg}`}>
+        <Icon className={`w-8 h-8 ${card.color}`} />
+       </div>
+       <div>
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{card.title}</p>
+        <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white bg-clip-text">{card.value}</h3>
+       </div>
       </div>
-      <div>
-       <p className="text-sm font-medium text-gray-500">{card.title}</p>
-       <h3 className="text-2xl font-bold text-gray-900">{card.value}</h3>
-      </div>
-     </div>
+     </motion.div>
     );
    })}
-  </div>
+  </motion.div>
  );
 }

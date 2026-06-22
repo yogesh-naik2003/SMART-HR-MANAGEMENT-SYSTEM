@@ -10,6 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+};
 
 export default function LeavesPage() {
   const [leaves, setLeaves] = useState([]);
@@ -69,14 +75,16 @@ export default function LeavesPage() {
       <DashboardLayout>
         <h1 className="text-2xl font-bold mb-6">Leave Management</h1>
 
+        <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
         <Tabs defaultValue="employee" className="space-y-6">
-          <TabsList className="bg-white border rounded-md shadow-sm h-12 w-full justify-start overflow-x-auto">
-            <TabsTrigger value="employee">Employee View (Apply)</TabsTrigger>
-            <TabsTrigger value="manager">Manager View (Approve)</TabsTrigger>
+          <TabsList className="glass-panel border-white/40 dark:border-white/10 shadow-sm h-14 w-full justify-start overflow-x-auto p-1 rounded-xl">
+            <TabsTrigger value="employee" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Employee View (Apply)</TabsTrigger>
+            <TabsTrigger value="manager" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Manager View (Approve)</TabsTrigger>
           </TabsList>
 
           <TabsContent value="employee" className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-1">
+            <motion.div variants={itemVariants} className="lg:col-span-1">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl">
               <CardHeader><CardTitle>Apply for Leave</CardTitle></CardHeader>
               <CardContent>
                 <form onSubmit={handleApply} className="space-y-4">
@@ -106,12 +114,14 @@ export default function LeavesPage() {
                     <label className="block text-sm font-medium mb-1">Reason</label>
                     <Input required value={formData.reason} onChange={(e) => setFormData({...formData, reason: e.target.value})} />
                   </div>
-                  <Button type="submit" className="w-full">Submit Application</Button>
+                  <Button type="submit" className="w-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">Submit Application</Button>
                 </form>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="lg:col-span-2">
+            <motion.div variants={itemVariants} className="lg:col-span-2">
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden h-full">
               <CardHeader><CardTitle>My Leave History</CardTitle></CardHeader>
               <CardContent>
                 <Table>
@@ -125,8 +135,8 @@ export default function LeavesPage() {
                   </TableHeader>
                   <TableBody>
                     {leaves.filter((l: any) => l.employee_id === 1).map((l: any) => (
-                      <TableRow key={l.id}>
-                        <TableCell>{l.leave_type_name}</TableCell>
+                      <TableRow key={l.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                        <TableCell className="font-medium text-slate-700 dark:text-slate-300">{l.leave_type_name}</TableCell>
                         <TableCell>{new Date(l.start_date).toLocaleDateString()} to {new Date(l.end_date).toLocaleDateString()}</TableCell>
                         <TableCell className="max-w-[150px] truncate">{l.reason}</TableCell>
                         <TableCell>
@@ -140,10 +150,12 @@ export default function LeavesPage() {
                 </Table>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="manager">
-            <Card>
+            <motion.div variants={itemVariants}>
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden">
               <CardHeader><CardTitle>Team Leave Requests</CardTitle></CardHeader>
               <CardContent>
                 <Table>
@@ -159,8 +171,8 @@ export default function LeavesPage() {
                   </TableHeader>
                   <TableBody>
                     {leaves.map((l: any) => (
-                      <TableRow key={l.id}>
-                        <TableCell className="font-medium">{l.employee_code}</TableCell>
+                      <TableRow key={l.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                        <TableCell className="font-medium text-slate-700 dark:text-slate-300">{l.employee_code}</TableCell>
                         <TableCell>{l.leave_type_name}</TableCell>
                         <TableCell>{new Date(l.start_date).toLocaleDateString()} to {new Date(l.end_date).toLocaleDateString()}</TableCell>
                         <TableCell className="max-w-[150px] truncate">{l.reason}</TableCell>
@@ -172,8 +184,8 @@ export default function LeavesPage() {
                         <TableCell className="text-right space-x-2">
                           {l.status === 'PENDING' && (
                             <>
-                              <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => handleAction(l.id, 'APPROVED')}>Approve</Button>
-                              <Button size="sm" variant="destructive" onClick={() => handleAction(l.id, 'REJECTED')}>Reject</Button>
+                              <Button size="sm" className="bg-green-600 hover:bg-green-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all" onClick={() => handleAction(l.id, 'APPROVED')}>Approve</Button>
+                              <Button size="sm" variant="destructive" className="shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all" onClick={() => handleAction(l.id, 'REJECTED')}>Reject</Button>
                             </>
                           )}
                         </TableCell>
@@ -183,8 +195,10 @@ export default function LeavesPage() {
                 </Table>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
         </Tabs>
+        </motion.div>
       </DashboardLayout>
     </AuthGuard>
   );

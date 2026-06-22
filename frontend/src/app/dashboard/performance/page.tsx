@@ -10,6 +10,12 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+};
 
 export default function PerformancePage() {
   const { data: goals, isLoading: isGoalsLoading } = useQuery({
@@ -33,14 +39,16 @@ export default function PerformancePage() {
       <DashboardLayout>
         <h1 className="text-2xl font-bold mb-6">Performance & Reviews</h1>
 
+        <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
         <Tabs defaultValue="goals" className="space-y-6">
-          <TabsList className="bg-white border rounded-md shadow-sm h-12 w-full justify-start overflow-x-auto">
-            <TabsTrigger value="goals">Company Goals</TabsTrigger>
-            <TabsTrigger value="reviews">Performance Reviews</TabsTrigger>
+          <TabsList className="glass-panel border-white/40 dark:border-white/10 shadow-sm h-14 w-full justify-start overflow-x-auto p-1 rounded-xl">
+            <TabsTrigger value="goals" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Company Goals</TabsTrigger>
+            <TabsTrigger value="reviews" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Performance Reviews</TabsTrigger>
           </TabsList>
 
           <TabsContent value="goals">
-            <Card>
+            <motion.div variants={itemVariants}>
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden">
               <CardHeader><CardTitle>Goal Tracking</CardTitle></CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -75,10 +83,12 @@ export default function PerformancePage() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="reviews">
-            <Card>
+            <motion.div variants={itemVariants}>
+            <Card className="glass-panel border-white/40 dark:border-white/10 shadow-xl overflow-hidden">
               <CardHeader><CardTitle>Review History</CardTitle></CardHeader>
               <CardContent>
                 {isReviewsLoading ? (
@@ -100,8 +110,8 @@ export default function PerformancePage() {
                     </TableHeader>
                     <TableBody>
                       {reviews?.map((r: any) => (
-                        <TableRow key={r.id}>
-                          <TableCell>{new Date(r.created_at).toLocaleDateString()}</TableCell>
+                        <TableRow key={r.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
+                          <TableCell className="font-medium text-slate-700 dark:text-slate-300">{new Date(r.created_at).toLocaleDateString()}</TableCell>
                           <TableCell className="font-medium">{r.employee_name}</TableCell>
                           <TableCell>{r.reviewer_name}</TableCell>
                           <TableCell>
@@ -124,8 +134,10 @@ export default function PerformancePage() {
                 )}
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
         </Tabs>
+        </motion.div>
 
       </DashboardLayout>
     </AuthGuard>

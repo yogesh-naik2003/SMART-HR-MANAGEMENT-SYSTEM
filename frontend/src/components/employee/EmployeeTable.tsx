@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function EmployeeTable() {
   const router = useRouter();
@@ -73,7 +74,8 @@ export default function EmployeeTable() {
         </Button>
       </div>
 
-      <div className="border rounded-md bg-white">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <div className="border border-white/40 dark:border-white/10 rounded-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl shadow-xl overflow-hidden glass-panel">
         <Table>
           <TableHeader>
             <TableRow>
@@ -96,7 +98,7 @@ export default function EmployeeTable() {
               </TableRow>
             ) : (
               employees.map((emp: any) => (
-                <TableRow key={emp.id}>
+                <TableRow key={emp.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
                   <TableCell className="font-medium">{emp.employee_code}</TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-3">
@@ -119,10 +121,10 @@ export default function EmployeeTable() {
                   <TableCell>{emp.designation}</TableCell>
                   <TableCell>₹{Number(emp.salary).toLocaleString()}</TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button variant="outline" size="icon" onClick={() => router.push(`/dashboard/employees/${emp.id}`)}>
+                    <Button variant="outline" size="icon" onClick={() => router.push(`/dashboard/employees/${emp.id}`)} className="shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
                       <Eye className="h-4 w-4 text-blue-600" />
                     </Button>
-                    <Button variant="outline" size="icon" onClick={() => handleDelete(emp.id)}>
+                    <Button variant="outline" size="icon" onClick={() => handleDelete(emp.id)} className="shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
                       <Trash2 className="h-4 w-4 text-red-600" />
                     </Button>
                   </TableCell>
@@ -132,6 +134,7 @@ export default function EmployeeTable() {
           </TableBody>
         </Table>
       </div>
+      </motion.div>
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center">
