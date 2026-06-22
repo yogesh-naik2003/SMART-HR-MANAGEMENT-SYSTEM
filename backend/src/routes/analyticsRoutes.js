@@ -143,7 +143,7 @@ router.get(
 router.get(
  "/dashboard",
  authMiddleware,
- roleMiddleware(1),
+ roleMiddleware(1, 2, 3, 4),
  analyticsController.dashboardSummary
 );
 

@@ -11,21 +11,21 @@ export default function DashboardStats() {
   }
 
   // @ts-ignore
-  const { totalEmployees, totalCandidates, totalJobs, payrollCost } = data.data;
+  const { employees, candidates, openJobs, payrollCost } = data.data;
 
   return(
    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
     <StatsCard
      title="Total Employees"
-     value={totalEmployees?.toString() || "0"}
+     value={employees?.toString() || "0"}
     />
     <StatsCard
      title="Total Candidates"
-     value={totalCandidates?.toString() || "0"}
+     value={candidates?.toString() || "0"}
     />
     <StatsCard
      title="Open Jobs"
-     value={totalJobs?.toString() || "0"}
+     value={openJobs?.toString() || "0"}
     />
     <StatsCard
      title="Payroll (YTD)"
