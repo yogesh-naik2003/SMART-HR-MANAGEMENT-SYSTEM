@@ -2,9 +2,9 @@ const { error } = require("../utils/apiResponse");
 
 const authorizeRole = (...allowedRoles) => {
   return (req, res, next) => {
-    const roleId = req.user.roleId || req.user.role_id;
-    if (!req.user || !roleId) {
-      return error(res, "Access denied. Role information missing.", 403);
+    let roleId = req.user.roleId || req.user.role_id;
+    if (!roleId) {
+      roleId = 4; // Default to Employee if missing
     }
 
     const roleMapping = {

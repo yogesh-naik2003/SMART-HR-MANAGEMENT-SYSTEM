@@ -5,7 +5,7 @@ const { success, error } = require("../utils/apiResponse");
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, roleId = null } = req.body;
+    const { name, email, password, roleId = 4 } = req.body;
 
     if (!name || !email || !password) {
       return error(res, "Name, email and password are required", 400);
