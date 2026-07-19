@@ -14,10 +14,10 @@ export default function DashboardLayout({
 
    return (
    <div className="flex h-screen overflow-hidden animated-bg relative">
-    {/* Liquid Glass Background Orbs */}
-    <div className="absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-cyan-500/40 blob" style={{ animationDelay: "0s" }}></div>
-    <div className="absolute bottom-[-10%] right-[-5%] w-[35vw] h-[35vw] bg-fuchsia-500/40 blob" style={{ animationDelay: "-5s", animationDuration: "25s" }}></div>
-    <div className="absolute top-[20%] right-[20%] w-[25vw] h-[25vw] bg-purple-600/30 blob" style={{ animationDelay: "-10s", animationDuration: "18s" }}></div>
+    {/* Premium Liquid Glass Background Orbs */}
+    <div className="absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-sky-200/60 dark:bg-indigo-900/30 blob" style={{ animationDelay: "0s" }}></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[35vw] h-[35vw] bg-purple-200/60 dark:bg-violet-900/30 blob" style={{ animationDelay: "-5s", animationDuration: "25s" }}></div>
+    <div className="absolute top-[20%] right-[20%] w-[25vw] h-[25vw] bg-emerald-200/50 dark:bg-emerald-900/20 blob" style={{ animationDelay: "-10s", animationDuration: "18s" }}></div>
 
     {/* Floating Glass Sidebar */}
     <div className="p-4 z-20">
