@@ -57,7 +57,7 @@ export default function AnalyticsCharts() {
       
       {/* Attendance Trend Chart */}
       <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Attendance Trend (This Week)</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -76,7 +76,7 @@ export default function AnalyticsCharts() {
 
       {/* Payroll Cost Chart */}
       <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Payroll Cost (YTD)</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -93,7 +93,7 @@ export default function AnalyticsCharts() {
 
       {/* Recruitment Funnel Chart */}
       <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Recruitment Funnel</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
