@@ -42,8 +42,8 @@ export default function PerformancePage() {
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
         <Tabs defaultValue="goals" className="space-y-6">
           <TabsList className="glass-panel border-white/40 dark:border-white/10 shadow-sm h-14 w-full justify-start overflow-x-auto p-1 rounded-xl">
-            <TabsTrigger value="goals" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Company Goals</TabsTrigger>
-            <TabsTrigger value="reviews" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Performance Reviews</TabsTrigger>
+            <TabsTrigger value="goals" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:glass data-[state=active]:border data-[state=active]:border-white/40 transition-all">Company Goals</TabsTrigger>
+            <TabsTrigger value="reviews" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:glass data-[state=active]:border data-[state=active]:border-white/40 transition-all">Performance Reviews</TabsTrigger>
           </TabsList>
 
           <TabsContent value="goals">

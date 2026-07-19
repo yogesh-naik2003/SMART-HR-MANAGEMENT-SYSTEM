@@ -93,7 +93,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 mt-4 rounded-xl font-bold bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all flex justify-center items-center group disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full py-4 mt-4 rounded-xl font-bold bg-gradient-to-r from-orange-500 to-rose-600 text-white shadow-[0_4px_14px_rgba(244,63,94,0.4)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.6)] hover:-translate-y-0.5 transition-all flex justify-center items-center group disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {loading ? "Logging in..." : "Log In"}
             {!loading && <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />}

@@ -56,7 +56,8 @@ export default function AnalyticsCharts() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
       
       {/* Attendance Trend Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Attendance Trend (This Week)</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -74,7 +75,8 @@ export default function AnalyticsCharts() {
       </div>
 
       {/* Payroll Cost Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Payroll Cost (YTD)</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -90,7 +92,8 @@ export default function AnalyticsCharts() {
       </div>
 
       {/* Recruitment Funnel Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Recruitment Funnel</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -112,7 +115,8 @@ export default function AnalyticsCharts() {
       </div>
 
       {/* Performance Rating Chart */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+      <div className="glass-panel p-6 rounded-xl hover-3d border border-white/40 dark:border-white/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl"></div>
         <h3 className="text-lg font-semibold mb-4 text-gray-800">Performance Ratings</h3>
         <div className="h-72">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>

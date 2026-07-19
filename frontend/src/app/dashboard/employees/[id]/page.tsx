@@ -80,7 +80,7 @@ export default function EmployeeProfilePage() {
 
         {/* Tabs Section */}
         <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList className="bg-white border rounded-md shadow-sm h-12 w-full justify-start overflow-x-auto">
+          <TabsList className="glass border-white/40 dark:border-white/10 rounded-md shadow-sm h-12 w-full justify-start overflow-x-auto">
             <TabsTrigger value="profile">Profile Details</TabsTrigger>
             <TabsTrigger value="attendance">Attendance</TabsTrigger>
             <TabsTrigger value="leaves">Leave Records</TabsTrigger>

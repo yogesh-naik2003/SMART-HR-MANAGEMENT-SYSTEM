@@ -99,9 +99,9 @@ export default function RecruitmentPage() {
         <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.1 } } }}>
         <Tabs defaultValue="funnel" className="space-y-6">
           <TabsList className="glass-panel border-white/40 dark:border-white/10 shadow-sm h-14 w-full justify-start overflow-x-auto p-1 rounded-xl">
-            <TabsTrigger value="funnel" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Recruitment Funnel</TabsTrigger>
-            <TabsTrigger value="jobs" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Job Management</TabsTrigger>
-            <TabsTrigger value="candidates" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 transition-all">Candidate Tracking</TabsTrigger>
+            <TabsTrigger value="funnel" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:glass data-[state=active]:border data-[state=active]:border-white/40 transition-all">Recruitment Funnel</TabsTrigger>
+            <TabsTrigger value="jobs" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:glass data-[state=active]:border data-[state=active]:border-white/40 transition-all">Job Management</TabsTrigger>
+            <TabsTrigger value="candidates" className="rounded-lg data-[state=active]:shadow-md data-[state=active]:glass data-[state=active]:border data-[state=active]:border-white/40 transition-all">Candidate Tracking</TabsTrigger>
           </TabsList>
 
           <TabsContent value="funnel">

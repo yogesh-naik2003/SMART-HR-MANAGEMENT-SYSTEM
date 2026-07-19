@@ -12,8 +12,13 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
 
-  return (
+   return (
    <div className="flex h-screen overflow-hidden animated-bg relative">
+    {/* Liquid Glass Background Orbs */}
+    <div className="absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-orange-500/40 blob" style={{ animationDelay: "0s" }}></div>
+    <div className="absolute bottom-[-10%] right-[-5%] w-[35vw] h-[35vw] bg-rose-500/40 blob" style={{ animationDelay: "-5s", animationDuration: "25s" }}></div>
+    <div className="absolute top-[20%] right-[20%] w-[25vw] h-[25vw] bg-pink-500/30 blob" style={{ animationDelay: "-10s", animationDuration: "18s" }}></div>
+
     {/* Floating Glass Sidebar */}
     <div className="p-4 z-20">
       <Sidebar />
@@ -23,7 +28,7 @@ export default function DashboardLayout({
     <div className="flex-1 flex flex-col h-screen overflow-hidden p-4 pl-0 z-10 relative">
      <div className="glass-panel flex-1 rounded-3xl overflow-hidden flex flex-col border border-white/40 dark:border-white/10 shadow-2xl relative">
        <Navbar />
-       <main className="flex-1 overflow-y-auto p-6 bg-white/40 dark:bg-slate-900/40 relative">
+       <main className="flex-1 overflow-y-auto p-6 glass relative">
         <motion.div
           key={pathname}
           initial={{ opacity: 0, y: 20, scale: 0.98 }}
